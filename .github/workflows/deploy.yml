@@ -1,0 +1,63 @@
+# Workflow untuk mendeploy konten statis ke GitHub Pages menggunakan PNPM
+name: Deploy static content to Pages with PNPM
+
+on:
+  # Berjalan saat ada push ke branch default
+  push:
+    branches: ["main"]
+
+  # Memungkinkan Anda menjalankan workflow ini secara manual dari tab Actions
+  workflow_dispatch:
+
+# Mengatur izin GITHUB_TOKEN untuk mengizinkan deployment ke GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Hanya izinkan satu deployment bersamaan
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Satu job deploy karena kita hanya mendeploy
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # LANGKAH 1 (DIUBAH): Setup PNPM
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8 # Atau versi pnpm yang Anda gunakan
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm" # Cache diubah ke pnpm
+
+      # LANGKAH 2 (DIUBAH): Install dependencies dengan pnpm
+      - name: Install dependencies
+        run: pnpm install
+
+      # LANGKAH 3 (DIUBAH): Build dengan pnpm
+      - name: Build
+        run: pnpm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload folder dist
+          path: "./dist"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
