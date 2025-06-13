@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from "vue-router";
+// BAGIAN 1 SUDAH DIUBAH DI SINI
+import { createRouter, createWebHashHistory } from "vue-router";
 // Kita impor komponen Home secara langsung karena ini halaman pertama
 import Home from "@/views/HomeView.vue";
 import About from "@/views/AboutView.vue";
@@ -54,7 +55,7 @@ const routes = [
     component: UtilityView,
     props: { mode: "construction" }, // Selalu kirim mode 'construction'
   },
-  
+
   // Rute "Catch-all" untuk 404, HARUS DI PALING BAWAH
   {
     path: "/:pathMatch(.*)*",
@@ -66,7 +67,8 @@ const routes = [
 
 // Membuat instance router dengan konfigurasi
 const router = createRouter({
-  history: createWebHistory(), // Menggunakan mode history HTML5 (URL bersih)
+  // BAGIAN 2 SUDAH DIUBAH DI SINI
+  history: createWebHashHistory(), // Menggunakan mode Hash untuk GitHub Pages
   routes, // Menggunakan daftar jalan yang sudah kita definisikan
   scrollBehavior(to, from, savedPosition) {
     // Jika ada hash di URL tujuan (misal: /#skills)
