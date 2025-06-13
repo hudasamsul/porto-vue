@@ -486,6 +486,7 @@ $star-color: #ffc107;
     margin: 0;
   }
 }
+
 .features-section {
   .section-subtitle {
     color: $text-secondary;
@@ -501,24 +502,18 @@ $star-color: #ffc107;
   }
   .feature-item {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    // Default layout untuk mobile: 1 kolom
+    grid-template-columns: 1fr; 
+    gap: 2rem;
     align-items: center;
 
-    .feature-image {
-      grid-area: 1 / 1;
-    } // Baris 1, Kolom 1
     .feature-content {
-      grid-area: 1 / 2;
-    } // Baris 1, Kolom 2
-
-    &.reverse {
-      .feature-image {
-        grid-area: 1 / 2;
-      } // Baris 1, Kolom 2
-      .feature-content {
-        grid-area: 1 / 1;
-      } // Baris 1, Kolom 1
+      // Teks selalu di bawah gambar secara default
+      order: 2; 
+    }
+    .feature-image {
+      // Gambar selalu di atas teks secara default
+      order: 1; 
     }
   }
   .feature-image img {
@@ -547,6 +542,7 @@ $star-color: #ffc107;
     }
   }
 }
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -784,20 +780,46 @@ $star-color: #ffc107;
 }
 
 // === 4. RESPONSIVE STYLES (DIORGANISIR ULANG) ===
-@media (max-width: 992px) {
+@media (min-width: 768px) {
   .features-section .feature-item {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    // Ubah menjadi 2 kolom
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    text-align: left;
+
+    // Reset urutan agar mengikuti alur grid
+    .feature-image,
+    .feature-content {
+      order: initial; 
+    }
+    
+    // Atur item pertama: gambar kiri, teks kanan
+    .feature-image {
+      grid-column: 1 / 2;
+    }
+    .feature-content {
+      grid-column: 2 / 3;
+    }
+
+    // Aturan untuk item yang dibalik
     &.reverse {
-      .feature-image,
+      .feature-image {
+        grid-column: 2 / 3; // Gambar pindah ke kanan
+      }
       .feature-content {
-        grid-column: auto;
-        grid-row: auto;
+        grid-column: 1 / 2; // Teks pindah ke kiri
       }
     }
-    .feature-image {
-      order: -1;
-    }
+  }
+}
+
+// Sesuaikan font size di mobile jika perlu
+@media (max-width: 767px) {
+  .features-section .feature-item {
+    text-align: center;
+  }
+  .features-section .feature-content h3 {
+    font-size: 1.8rem;
   }
 }
 
