@@ -8,15 +8,41 @@ import { allProjects } from "@/data/projects.js";
 import { useTextScramble } from "@/composables/useTextScramble.js";
 
 // 2. Definisikan semua data sebagai state reaktif
-const heroBackgroundImage = ref(new URL("@/assets/hero-background.jpg", import.meta.url).href);
-const feature1Image = ref(new URL("@/assets/feature-1.jpg", import.meta.url).href);
-const feature2Image = ref(new URL("@/assets/feature-2.jpg", import.meta.url).href);
-const testimonialBgImage = ref(new URL("@/assets/testimonial-bg.jpg", import.meta.url).href);
+const heroBackgroundImage = ref(
+  new URL("@/assets/hero-background.jpg", import.meta.url).href
+);
+const feature1Image = ref(
+  new URL("@/assets/feature-1.jpg", import.meta.url).href
+);
+const feature2Image = ref(
+  new URL("@/assets/feature-2.jpg", import.meta.url).href
+);
+const testimonialBgImage = ref(
+  new URL("@/assets/testimonial-bg.jpg", import.meta.url).href
+);
 
 const testimonials = ref([
-  { quote: "Working with Samsul has been a fantastic experience...", author: "John Doe", title: "CEO at Company", image: new URL("@/assets/client1.jpg", import.meta.url).href, rating: 5, },
-  { quote: "A true professional who understands both the technical...", author: "Jane Smith", title: "Project Manager, Innovate Ltd.", image: new URL("@/assets/client2.jpg", import.meta.url).href, rating: 5, },
-  { quote: "The final product is not only functional but also beautiful...", author: "Sara Wilson", title: "Lead Designer", image: new URL("@/assets/client1.jpg", import.meta.url).href, rating: 4, }
+  {
+    quote: "Working with Samsul has been a fantastic experience...",
+    author: "John Doe",
+    title: "CEO at Company",
+    image: new URL("@/assets/client1.jpg", import.meta.url).href,
+    rating: 5,
+  },
+  {
+    quote: "A true professional who understands both the technical...",
+    author: "Jane Smith",
+    title: "Project Manager, Innovate Ltd.",
+    image: new URL("@/assets/client2.jpg", import.meta.url).href,
+    rating: 5,
+  },
+  {
+    quote: "The final product is not only functional but also beautiful...",
+    author: "Sara Wilson",
+    title: "Lead Designer",
+    image: new URL("@/assets/client1.jpg", import.meta.url).href,
+    rating: 4,
+  },
 ]);
 
 const skills = ref([
@@ -29,12 +55,27 @@ const skills = ref([
 ]);
 
 const techLogos = ref([
-  { name: "CodeIgniter", src: new URL("@/assets/logo/codeigniter.png", import.meta.url).href },
+  {
+    name: "CodeIgniter",
+    src: new URL("@/assets/logo/codeigniter.png", import.meta.url).href,
+  },
   { name: "CSS", src: new URL("@/assets/logo/css.png", import.meta.url).href },
-  { name: "TailwindCSS", src: new URL("@/assets/logo/tailwindcss.png", import.meta.url).href },
-  { name: "Vue.js", src: new URL("@/assets/logo/vue.png", import.meta.url).href },
-  { name: "Python", src: new URL("@/assets/logo/python.png", import.meta.url).href },
-  { name: "JavaScript", src: new URL("@/assets/logo/js.png", import.meta.url).href },
+  {
+    name: "TailwindCSS",
+    src: new URL("@/assets/logo/tailwindcss.png", import.meta.url).href,
+  },
+  {
+    name: "Vue.js",
+    src: new URL("@/assets/logo/vue.png", import.meta.url).href,
+  },
+  {
+    name: "Python",
+    src: new URL("@/assets/logo/python.png", import.meta.url).href,
+  },
+  {
+    name: "JavaScript",
+    src: new URL("@/assets/logo/js.png", import.meta.url).href,
+  },
 ]);
 
 const featuredProjects = computed(() => {
@@ -57,7 +98,9 @@ const scrollToTop = () => {
 
 const currentTestimonialIndex = ref(0);
 let testimonialAutoplayInterval = null;
-const currentTestimonial = computed(() => testimonials.value[currentTestimonialIndex.value]);
+const currentTestimonial = computed(
+  () => testimonials.value[currentTestimonialIndex.value]
+);
 const goToTestimonial = (index) => {
   currentTestimonialIndex.value = index;
   clearInterval(testimonialAutoplayInterval);
@@ -65,13 +108,15 @@ const goToTestimonial = (index) => {
 };
 const startTestimonialAutoplay = () => {
   testimonialAutoplayInterval = setInterval(() => {
-    currentTestimonialIndex.value = (currentTestimonialIndex.value + 1) % testimonials.value.length;
+    currentTestimonialIndex.value =
+      (currentTestimonialIndex.value + 1) % testimonials.value.length;
   }, 5000);
 };
 
 // useTextScramble untuk efek teks
 const { scrambledText: heroTitle, setText: setHeroTitle } = useTextScramble();
-const { scrambledText: heroHighlight, setText: setHeroHighlight } = useTextScramble();
+const { scrambledText: heroHighlight, setText: setHeroHighlight } =
+  useTextScramble();
 
 // PERBAIKAN: Gunakan 'route' bukan 'router' untuk membaca info
 const route = useRoute();
@@ -101,7 +146,7 @@ onMounted(async () => {
     const element = document.querySelector(route.hash);
     if (element) {
       const top = element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: top, behavior: 'smooth' });
+      window.scrollTo({ top: top, behavior: "smooth" });
     }
   }
 
@@ -109,9 +154,9 @@ onMounted(async () => {
   window.addEventListener("scroll", handleScroll);
   startTestimonialAutoplay();
 
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 500));
   await setHeroTitle("Hi, I'm ");
-  await setHeroHighlight("Samsul Huda");
+  await setHeroHighlight("Meidina");
 });
 
 onUnmounted(() => {
@@ -121,9 +166,13 @@ onUnmounted(() => {
 });
 
 useHead({
-  title: 'Samsul Huda | Frontend Developer & UI Designer',
+  title: "Samsul Huda | Frontend Developer & UI Designer",
   meta: [
-    { name: 'description', content: 'Portofolio pribadi Samsul Huda, seorang frontend developer yang bersemangat dalam membangun web experience yang indah dan responsif.' },
+    {
+      name: "description",
+      content:
+        "Portofolio pribadi Samsul Huda, seorang frontend developer yang bersemangat dalam membangun web experience yang indah dan responsif.",
+    },
   ],
 });
 </script>
@@ -138,7 +187,8 @@ useHead({
     >
       <div class="container hero-content">
         <h1 data-aos="fade-up">
-          <span v-html="heroTitle"></span><span class="highlight" v-html="heroHighlight"></span>
+          <span v-html="heroTitle"></span
+          ><span class="highlight" v-html="heroHighlight"></span>
         </h1>
         <h2 data-aos="fade-up" data-aos-delay="100">
           Frontend Developer & UI Designer
@@ -503,17 +553,17 @@ $star-color: #ffc107;
   .feature-item {
     display: grid;
     // Default layout untuk mobile: 1 kolom
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     gap: 2rem;
     align-items: center;
 
     .feature-content {
       // Teks selalu di bawah gambar secara default
-      order: 2; 
+      order: 2;
     }
     .feature-image {
       // Gambar selalu di atas teks secara default
-      order: 1; 
+      order: 1;
     }
   }
   .feature-image img {
@@ -790,9 +840,9 @@ $star-color: #ffc107;
     // Reset urutan agar mengikuti alur grid
     .feature-image,
     .feature-content {
-      order: initial; 
+      order: initial;
     }
-    
+
     // Atur item pertama: gambar kiri, teks kanan
     .feature-image {
       grid-column: 1 / 2;
