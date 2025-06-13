@@ -156,7 +156,7 @@ onMounted(async () => {
 
   await new Promise((resolve) => setTimeout(resolve, 500));
   await setHeroTitle("Hi, I'm ");
-  await setHeroHighlight("Meidina");
+  await setHeroHighlight("Samsul Huda");
 });
 
 onUnmounted(() => {
